@@ -4,7 +4,11 @@
 ###############################################################################
 ---
 FieldLists:
-    - &prognostic       ["uo", "vo", "h", "e", "thetao", "so", "rhoinsitu", "KE", "rhopot0"]
+    - &prognostic       ["uo", "vo", "h", "e", "thetao", "so", "KE", "rhopot0"]
+
+    - &prognostic_z     ["uo", "vo", "h", "thetao", "so", "agessc", "rhopot0", "N2_int"]
+
+    - &prognostic_rho2  ["thetao", "so", "agessc"]
 
     - &hist_additional  ["soga", "thetaoga", "uh", "vh", "vhbt", "uhbt"]
 
@@ -65,11 +69,21 @@ Files:
         regional_section: "none"    # global
         fields:
             $OCN_DIAG_MODE != "none":
-                - module:   "ocean_model_rho2"
-                  packing:
-                      $TEST == True: 1  # double precision
-                      else: 2           # single precision
-                  lists:    [ *transports ]
+                $USE_CFC_CAP == "True":
+                     - module:   "ocean_model_rho2"
+                       packing:
+                           $TEST == True: 1  # double precision
+                           else: 2           # single precision
+                       lists:    [ *transports,
+                                   *cfc_2d,
+                                   *prognostic_rho2 ]
+                else:
+                     - module:   "ocean_model_rho2"
+                       packing:
+                           $TEST == True: 1  # double precision
+                           else: 2           # single precision
+                       lists:    [ *transports,
+                                *prognostic_rho2 ]
 
     # native grid
     hist:
@@ -148,21 +162,24 @@ Files:
                   packing:
                       $TEST == True: 1  # double precision
                       else: 2           # single precision
-                  lists:    [ *prognostic ]
+                  lists:    [ *prognostic_z,
+                              *transports ]
             $OCN_DIAG_MODE not in ["spinup", "none"]:
                 $USE_CFC_CAP == "True":
                     - module:   "ocean_model_z"   # z_space
                       packing:
                           $TEST == True: 1  # double precision
                           else: 2           # single precision
-                      lists:    [ *prognostic,
+                      lists:    [ *prognostic_z,
+                                  *transports,
                                   *cfc_3d ]
                 else:
                     - module:   "ocean_model_z"   # z_space
                       packing:
                           $TEST == True: 1  # double precision
                           else: 2           # single precision
-                      lists:    [ *prognostic ]
+                      lists:    [ *prognostic_z,
+                                  *transports ]
 
     surface_avg:
         suffix: "sfc%4yr-%2mo"

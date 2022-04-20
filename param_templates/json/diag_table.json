@@ -7,9 +7,23 @@
          "e",
          "thetao",
          "so",
-         "rhoinsitu",
          "KE",
          "rhopot0"
+      ],
+      [
+         "uo",
+         "vo",
+         "h",
+         "thetao",
+         "so",
+         "agessc",
+         "rhopot0",
+         "N2_int"
+      ],
+      [
+         "thetao",
+         "so",
+         "agessc"
       ],
       [
          "soga",
@@ -160,26 +174,64 @@
          "reduction_method": "mean",
          "regional_section": "none",
          "fields": {
-            "$OCN_DIAG_MODE != \"none\"": [
-               {
-                  "module": "ocean_model_rho2",
-                  "packing": {
-                     "$TEST == True": 1,
-                     "else": 2
-                  },
-                  "lists": [
-                     [
-                        "volcello",
-                        "vmo",
-                        "vhGM",
-                        "vhml",
-                        "umo",
-                        "uhGM",
-                        "uhml"
+            "$OCN_DIAG_MODE != \"none\"": {
+               "$USE_CFC_CAP == \"True\"": [
+                  {
+                     "module": "ocean_model_rho2",
+                     "packing": {
+                        "$TEST == True": 1,
+                        "else": 2
+                     },
+                     "lists": [
+                        [
+                           "volcello",
+                           "vmo",
+                           "vhGM",
+                           "vhml",
+                           "umo",
+                           "uhGM",
+                           "uhml"
+                        ],
+                        [
+                           "cfc11_flux",
+                           "cfc12_flux",
+                           "ice_fraction",
+                           "u10_sqr"
+                        ],
+                        [
+                           "thetao",
+                           "so",
+                           "agessc"
+                        ]
                      ]
-                  ]
-               }
-            ]
+                  }
+               ],
+               "else": [
+                  {
+                     "module": "ocean_model_rho2",
+                     "packing": {
+                        "$TEST == True": 1,
+                        "else": 2
+                     },
+                     "lists": [
+                        [
+                           "volcello",
+                           "vmo",
+                           "vhGM",
+                           "vhml",
+                           "umo",
+                           "uhGM",
+                           "uhml"
+                        ],
+                        [
+                           "thetao",
+                           "so",
+                           "agessc"
+                        ]
+                     ]
+                  }
+               ]
+            }
          }
       },
       "hist": {
@@ -255,7 +307,6 @@
                            "e",
                            "thetao",
                            "so",
-                           "rhoinsitu",
                            "KE",
                            "rhopot0"
                         ],
@@ -354,7 +405,6 @@
                            "e",
                            "thetao",
                            "so",
-                           "rhoinsitu",
                            "KE",
                            "rhopot0"
                         ],
@@ -468,12 +518,20 @@
                         "uo",
                         "vo",
                         "h",
-                        "e",
                         "thetao",
                         "so",
-                        "rhoinsitu",
-                        "KE",
-                        "rhopot0"
+                        "agessc",
+                        "rhopot0",
+                        "N2_int"
+                     ],
+                     [
+                        "volcello",
+                        "vmo",
+                        "vhGM",
+                        "vhml",
+                        "umo",
+                        "uhGM",
+                        "uhml"
                      ]
                   ]
                }
@@ -491,12 +549,20 @@
                            "uo",
                            "vo",
                            "h",
-                           "e",
                            "thetao",
                            "so",
-                           "rhoinsitu",
-                           "KE",
-                           "rhopot0"
+                           "agessc",
+                           "rhopot0",
+                           "N2_int"
+                        ],
+                        [
+                           "volcello",
+                           "vmo",
+                           "vhGM",
+                           "vhml",
+                           "umo",
+                           "uhGM",
+                           "uhml"
                         ],
                         [
                            "cfc11",
@@ -517,12 +583,20 @@
                            "uo",
                            "vo",
                            "h",
-                           "e",
                            "thetao",
                            "so",
-                           "rhoinsitu",
-                           "KE",
-                           "rhopot0"
+                           "agessc",
+                           "rhopot0",
+                           "N2_int"
+                        ],
+                        [
+                           "volcello",
+                           "vmo",
+                           "vhGM",
+                           "vhml",
+                           "umo",
+                           "uhGM",
+                           "uhml"
                         ]
                      ]
                   }
